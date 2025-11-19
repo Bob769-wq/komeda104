@@ -14,25 +14,27 @@ interface DetailList {
 }
 @Component({
   selector: 'app-company-benefits',
-  imports: [RouterLink, BlockTitle, TagSection],
+  imports: [BlockTitle, TagSection],
   template: `
-    <div class="px-10 py-6 bg-white">
-      <app-block-title label="福利制度" />
-      <div class="flex flex-col">
-        <app-tag-section [items]="lawBenefitsItem" title="法定項目" />
-        <app-tag-section [items]="otherBenefitsItem" title="其他福利" />
-        <div class="flex flex-col gap-0.5">
-          @for (item of detailItem; track item.id) {
-            <h4 class="text-base">{{ item.title }}</h4>
-            <ul class="flex flex-col gap-0.5">
-              @for (child of item.children; track child.id) {
-                <li class="text-base">{{ child.title }}</li>
-              }
-            </ul>
-          }
+    <section id="benefits">
+      <div class="lg:px-10 lg:py-6 p-4 bg-white rounded">
+        <app-block-title label="福利制度" />
+        <div class="flex flex-col">
+          <app-tag-section [items]="lawBenefitsItem" title="法定項目" />
+          <app-tag-section [items]="otherBenefitsItem" title="其他福利" />
+          <div class="flex flex-col gap-0.5">
+            @for (item of detailItem; track item.id) {
+              <h4 class="text-base">{{ item.title }}</h4>
+              <ul class="flex flex-col gap-0.5">
+                @for (child of item.children; track child.id) {
+                  <li class="text-base">{{ child.title }}</li>
+                }
+              </ul>
+            }
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   `,
   styles: ``,
 })

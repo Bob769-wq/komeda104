@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 interface ThumbUp {
   id: number;
@@ -14,14 +14,14 @@ interface InterestedList {
   selector: 'app-sidenav',
   imports: [RouterLink],
   template: `
-    <div class="flex flex-col gap-4">
-      <div class="p-4 bg-white">
+    <div class="flex flex-col gap-4" [class]="isFixed() ? 'fixed bottom-16 w-56' : 'relative'">
+      <div class="p-4 bg-white rounded">
         <h3 class="font-bold text-base mb-4">最新消息</h3>
-        <p class="text-side-nav-text max-h-[60px] text-sm leading-5">
+        <p class="text-side-nav-text max-h-14 text-sm leading-5">
           林口三井&誠品站前 新進正職另提供限時每月職務津貼 誠摯邀請您加入我們~
         </p>
       </div>
-      <div class="p-4 bg-white">
+      <div class="p-4 bg-white rounded">
         <h3 class="font-bold text-base mb-4">公司評價</h3>
         <div class="flex items-center gap-2 mb-6">
           <p class="text-4xl ml-5">5.0</p>
@@ -33,23 +33,23 @@ interface InterestedList {
         </div>
 
         <a
-          class="border flex justify-center border-primary-orange text-primary-orange leading-8 rounded w-full"
+          routerLink="/rating"
+          class="border flex justify-center border-primary-orange text-primary-orange
+          leading-8 rounded w-full"
         >
-          <span>看完整評價</span>
+          <span class="font-bold">看完整評價</span>
         </a>
       </div>
 
-      <div class="">
-        <a href="http://komeda.com.tw" target="_blank">
-          <img
-            src="/sidenav/sidenav-pic.jpg"
-            class="w-full object-cover aspect-[4/9]"
-            alt="sidenav"
-          />
-        </a>
-      </div>
+      <a href="http://komeda.com.tw" target="_blank">
+        <img
+          src="/sidenav/sidenav-pic.jpg"
+          class="w-full object-cover rounded aspect-[4/9]"
+          alt="sidenav"
+        />
+      </a>
 
-      <div class="p-4 bg-white">
+      <div class="p-4 bg-white rounded">
         <h3 class="font-bold text-base mb-4">瀏覽公司紀錄</h3>
         <div class="pb-4">
           <a
@@ -60,13 +60,13 @@ interface InterestedList {
         </div>
       </div>
 
-      <div class="p-4 bg-white">
+      <div class="p-4 bg-white rounded">
         <h3 class="font-bold text-base mb-4">你可能有興趣的公司</h3>
         <div class="flex flex-col">
           @for (item of interestedItem; track item.id; let last = $last) {
             <a
               [routerLink]="item.link"
-              class="flex flex-col hover:text-primary-orange pb-4 text-sm"
+              class="flex flex-col hover:text-primary-orange pb-4 text-sm text-lighter-text"
               [class]="last ? 'border-b' : 'border-none'"
             >
               <h4 class="font-bold line-clamp-1">{{ item.title }}</h4>
@@ -74,7 +74,10 @@ interface InterestedList {
             </a>
           }
         </div>
-        <a class="flex justify-center items-center gap-2 pt-3 hover:text-primary-orange">
+        <a
+          routerLink="/more"
+          class="flex justify-center items-center gap-2 pt-3 hover:text-primary-orange text-lighter-text"
+        >
           <span class="font-bold">看更多</span>
           <span><i class="fa-solid fa-chevron-right fa-lg"></i></span>
         </a>
@@ -84,6 +87,18 @@ interface InterestedList {
   styles: ``,
 })
 export class Sidenav {
+  isFixed = signal(false);
+  FixedThreshold = 1400;
+  @HostListener('window:scroll')
+  onWindowScroll() {
+    const scrollPosition = window.scrollY;
+    if (scrollPosition > this.FixedThreshold) {
+      this.isFixed.set(true);
+    } else {
+      this.isFixed.set(false);
+    }
+  }
+
   thumbItem: ThumbUp[] = [
     { id: 1, icon: 'fa-solid fa-thumbs-up fa-lg' },
     { id: 2, icon: 'fa-solid fa-thumbs-up fa-lg' },
