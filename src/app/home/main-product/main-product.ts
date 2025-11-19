@@ -19,7 +19,7 @@ interface PictureList {
             class="max-w-56 aspect-[3/2] hidden lg:block"
             alt="product"
           />
-          <div class="mt-4 flex overflow-x-auto gap-1">
+          <div class="mt-4 flex overflow-x-auto gap-1 lg:hidden">
             @for (item of productImg; track item.id) {
               <img [src]="item.img" [alt]="item.title" class="max-w-44 max-h-32 cursor-pointer" />
             }
