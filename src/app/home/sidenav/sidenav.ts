@@ -1,5 +1,6 @@
 import { Component, HostListener, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { InterestedCompanyContent } from '../../interested-company-content/interested-company-content';
 interface ThumbUp {
   id: number;
   icon: string;
@@ -12,7 +13,7 @@ interface InterestedList {
 }
 @Component({
   selector: 'app-sidenav',
-  imports: [RouterLink],
+  imports: [RouterLink, InterestedCompanyContent],
   template: `
     <div class="flex flex-col gap-4" [class]="isFixed() ? 'fixed bottom-16 w-56' : 'relative'">
       <div class="p-4 bg-white rounded">
@@ -60,28 +61,7 @@ interface InterestedList {
         </div>
       </div>
 
-      <div class="p-4 bg-white rounded">
-        <h3 class="font-bold text-base mb-4">你可能有興趣的公司</h3>
-        <div class="flex flex-col">
-          @for (item of interestedItem; track item.id; let last = $last) {
-            <a
-              [routerLink]="item.link"
-              class="flex flex-col hover:text-primary-orange pb-4 text-sm text-lighter-text"
-              [class]="last ? 'border-b' : 'border-none'"
-            >
-              <h4 class="font-bold line-clamp-1">{{ item.title }}</h4>
-              <h5>{{ item.district }}</h5>
-            </a>
-          }
-        </div>
-        <a
-          routerLink="/more"
-          class="flex justify-center items-center gap-2 pt-3 hover:text-primary-orange text-lighter-text"
-        >
-          <span class="font-bold">看更多</span>
-          <span><i class="fa-solid fa-chevron-right fa-lg"></i></span>
-        </a>
-      </div>
+      <app-interested-company-content [interestedItem]="interestedItem" />
     </div>
   `,
   styles: ``,
