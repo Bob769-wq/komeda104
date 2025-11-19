@@ -61,7 +61,7 @@ interface InterestedList {
         </div>
       </div>
 
-      <app-interested-company-content [interestedItem]="interestedItem" />
+      <app-interested-company-content [interestedItem]="interestedItem" variant="sidenav" />
     </div>
   `,
   styles: ``,

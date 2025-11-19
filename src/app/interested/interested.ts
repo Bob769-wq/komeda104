@@ -10,7 +10,9 @@ interface InterestedList {
 @Component({
   selector: 'app-interested',
   imports: [RouterLink, InterestedCompanyContent],
-  template: ` <app-interested-company-content [interestedItem]="interestedItem" /> `,
+  template: `
+    <app-interested-company-content [interestedItem]="interestedItem" variant="mobile" />
+  `,
   styles: ``,
 })
 export class Interested {

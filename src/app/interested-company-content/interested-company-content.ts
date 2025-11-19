@@ -15,7 +15,7 @@ type StyleVariant = 'sidenav' | 'mobile';
       <h3 class="font-bold text-lg mb-4" [class]="headingSize()">你可能有興趣的公司</h3>
       <div class="flex flex-col">
         @for (item of interestedItem(); track item.id; let last = $last) {
-          <a [routerLink]="item.link" [class]="itemClass()" [class.border-b]="!last">
+          <a [routerLink]="item.link" [class]="itemClass()" [class.border-b]="last">
             <h4 [class]="titleClass()">
               {{ item.title }}
             </h4>
